@@ -16,7 +16,7 @@ vector_store=Chroma(
 )
 
 def retrive_document(question,k=4):
-    documents=vector_store.similarity_search(
+    documents=vector_store.similarity_search_with_score(
         query=question,
         k=k
     )
@@ -26,9 +26,10 @@ if __name__=="__main__":
     question="What is agentic AI?"
     documents=retrive_document(question)
 
-    for i , doc in enumerate(documents):
+    for i , (doc,score) in enumerate(documents):
         print(f"\nChunk {i + 1}")
         print("Page:", doc.metadata.get("page"))
+        print("Score:", score)
         print(doc.page_content)
 
 
