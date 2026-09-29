@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+jinja2
+pydantic
+python-dotenv
+
+langgraph
+langchain-groq
+
+langchain-community
+langchain-text-splitters
+langchain-chroma
+
+chromadb
+fastembed
+pypdf
+fonttools

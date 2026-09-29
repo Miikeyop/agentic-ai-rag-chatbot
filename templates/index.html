@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Agentic AI RAG-powered knowledge assistant"
+    >
+
+    <title>Agentic AI Assistant</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <main class="app">
+
+        <header class="header">
+
+            <div class="brand">
+
+                <div class="logo">
+                    AI
+                </div>
+
+                <div class="brand-info">
+                    <h1>Agentic AI Assistant</h1>
+                    <p>RAG-powered knowledge assistant</p>
+                </div>
+
+            </div>
+
+            <div class="header-actions">
+
+                <a
+                    href="/pdf"
+                    target="_blank"
+                    class="pdf-btn"
+                >
+                    <span>View PDF</span>
+                </a>
+
+                <a
+                    href="/pdf/download"
+                    class="pdf-btn download-btn"
+                >
+                    <span>Download</span>
+                </a>
+
+                <div class="status">
+                    <span class="status-dot"></span>
+                    <span>Knowledge Base Connected</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="chat-container">
+
+            <div
+                id="chatMessages"
+                class="chat-messages"
+            >
+
+                <div class="message assistant-message">
+
+                    <div class="avatar">
+                        AI
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="assistant-label">
+                            Agentic AI Assistant
+                        </div>
+
+                        <div class="message-bubble">
+                            Hi! I'm a RAG-powered assistant grounded in the Agentic AI eBook. Ask me anything about the provided knowledge base.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="suggestions"
+                    class="suggestions"
+                >
+
+                    <button
+                        type="button"
+                        class="suggestion"
+                    >
+                        What is Agentic AI?
+                    </button>
+
+                    <button
+                        type="button"
+                        class="suggestion"
+                    >
+                        Explain multi-agent systems
+                    </button>
+
+                    <button
+                        type="button"
+                        class="suggestion"
+                    >
+                        What are autonomous agents?
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="typingIndicator"
+                class="typing hidden"
+            >
+
+                <div class="avatar">
+                    AI
+                </div>
+
+                <div class="typing-content">
+
+                    <span class="thinking-text">
+                        Searching knowledge base
+                    </span>
+
+                    <div class="typing-box">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="input-wrapper">
+
+                <form
+                    id="chatForm"
+                    class="input-area"
+                >
+
+                    <textarea
+                        id="questionInput"
+                        placeholder="Ask something about Agentic AI..."
+                        rows="1"
+                        maxlength="1000"
+                        required
+                    ></textarea>
+
+                    <button
+                        id="sendButton"
+                        type="submit"
+                    >
+                        <span>Send</span>
+                        <span class="send-arrow">↑</span>
+                    </button>
+
+                </form>
+
+                <div class="input-footer">
+
+                    <span>
+                        Answers are generated only from the provided Agentic AI eBook.
+                    </span>
+
+                    <span>
+                        Enter to send · Shift + Enter for new line
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
