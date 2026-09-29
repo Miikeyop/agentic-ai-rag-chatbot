@@ -1,4 +1,6 @@
 
+import os
+import shutil
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
@@ -35,6 +37,9 @@ def get_embedding_model():
     return embedding_model
 
 def store_in_chroma(chunks, embedding_model):
+
+    if os.path.exists("chroma_db"):
+        shutil.rmtree("chroma_db")
 
     vector_store = Chroma.from_documents(
         documents=chunks,
