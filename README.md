@@ -1,89 +1,151 @@
 # Agentic AI RAG Chatbot
 
-A Retrieval-Augmented Generation (RAG) chatbot built using **Python, LangGraph, ChromaDB, FastEmbed, Groq, and FastAPI**.
+A Retrieval-Augmented Generation chatbot built using Python, LangGraph, ChromaDB, FastEmbed, Groq, and FastAPI.
 
-The chatbot answers questions strictly using information retrieved from the provided **Agentic AI eBook**.
+The chatbot answers questions strictly using information retrieved from the provided Agentic AI eBook.
 
 ## Live Demo
 
 https://agentic-ai-rag-chatbot-z6ea.onrender.com
 
-## Features
+## 1. Setup Instructions
 
-- PDF ingestion and text extraction
-- Recursive document chunking
-- Vector embeddings using `BAAI/bge-small-en-v1.5`
-- ChromaDB vector storage
-- Semantic similarity search
-- LangGraph-based RAG workflow
-- Groq-powered LLM response generation
-- Answers grounded only in retrieved eBook context
-- Retrieved chunks displayed with page numbers
-- Vector distance scores for every retrieved chunk
-- Overall retrieval confidence score
-- FastAPI REST API
-- Interactive dark-theme chatbot UI
-- View and download the source PDF
-- Swagger API documentation
+Clone the repository:
 
-## Tech Stack
+```bash
+git clone https://github.com/Miikeyop/agentic-ai-rag-chatbot.git
+cd agentic-ai-rag-chatbot
+```
 
-| Component | Technology |
-|---|---|
-| Language | Python |
-| API Framework | FastAPI |
-| RAG Orchestration | LangGraph |
-| LLM | Groq |
-| LLM Model | `openai/gpt-oss-120b` |
-| Embeddings | FastEmbed |
-| Embedding Model | `BAAI/bge-small-en-v1.5` |
-| Vector Database | ChromaDB |
-| PDF Loader | PyPDFLoader |
-| Text Splitting | RecursiveCharacterTextSplitter |
-| Frontend | HTML, CSS, JavaScript |
-| Deployment | Render |
+Create a virtual environment:
 
-## Architecture
+```bash
+uv venv
+```
 
-The application follows a simple Retrieval-Augmented Generation pipeline:
+Activate it on Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
+uv pip install -r requirements.txt
+```
+
+Create a `.env` file in the project root and add:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+```
+
+Create the vector database:
+
+```bash
+python rag/ingest.py
+```
+
+Run the application:
+
+```bash
+uv run uvicorn app:app --reload
+```
+
+Open the application in your browser:
 
 ```text
-                     Agentic AI eBook
-                            |
-                            v
-                       PyPDFLoader
-                            |
-                            v
-             RecursiveCharacterTextSplitter
-                            |
-                            v
-                 FastEmbed Embeddings
-                            |
-                            v
-                        ChromaDB
-                            |
-                            |
-User Question               |
-     |                      |
-     v                      |
- FastAPI /chat              |
-     |                      |
-     v                      |
-  LangGraph                 |
-     |                      |
-     v                      |
-Retrieve Relevant Chunks <--+
-     |
-     v
-Build Grounded Context
-     |
-     v
+http://127.0.0.1:8000
+```
+
+## 2. Working RAG Chatbot
+
+The chatbot returns:
+
+- Final answer
+- Retrieved context chunks
+- Page numbers
+- Retrieval distance scores
+- Overall retrieval confidence
+
+FastAPI documentation:
+
+```text
+/docs
+```
+
+Main chat endpoint:
+
+```http
+POST /chat
+```
+
+Example request:
+
+```json
+{
+  "question": "What is Agentic AI?"
+}
+```
+
+## 3. Sample Queries
+
+1. What is Agentic AI?
+2. How is Agentic AI different from traditional AI?
+3. What are the key characteristics of Agentic AI?
+4. What are autonomous AI agents?
+5. How do multi-agent systems work?
+6. What are some real-world applications of Agentic AI?
+
+## 4. Short Architecture Explanation
+
+The application follows this RAG pipeline:
+
+```text
+Agentic AI PDF
+      |
+      v
+PyPDFLoader
+      |
+      v
+Recursive Text Chunking
+      |
+      v
+FastEmbed Embeddings
+      |
+      v
+ChromaDB
+      |
+      v
+User Question
+      |
+      v
+LangGraph Retrieve Node
+      |
+      v
+Relevant Context Chunks
+      |
+      v
+LangGraph Generate Node
+      |
+      v
 Groq LLM
-     |
-     v
-Final Answer
-     |
-     +--> Retrieved Chunks
-     +--> Page Numbers
-     +--> Distance Scores
-     +--> Retrieval Confidence
+      |
+      v
+Final Grounded Answer
+```
+
+The Agentic AI PDF is loaded using `PyPDFLoader` and split into smaller chunks using `RecursiveCharacterTextSplitter`.
+
+Each chunk is converted into an embedding using the `BAAI/bge-small-en-v1.5` embedding model and stored in ChromaDB.
+
+When a user asks a question, the LangGraph retrieve node searches ChromaDB and returns the most relevant chunks.
+
+The retrieved chunks are passed to the generate node, where the Groq LLM generates the final answer using only the provided context.
+
+If the required information is not available in the retrieved context, the chatbot returns:
+
+```text
+I could not find enough information in the provided knowledge base.
+```
